@@ -1,0 +1,36 @@
+{
+  "name": "vibesafe-mcp",
+  "version": "1.0.0",
+  "description": "VibeSafe security scanner as an MCP server — scan code, live URLs, and run a Launch Check on your app from any MCP client (Claude, Cursor, etc.).",
+  "type": "module",
+  "bin": {
+    "vibesafe-mcp": "index.js"
+  },
+  "files": [
+    "index.js",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "mcp",
+    "modelcontextprotocol",
+    "security",
+    "scanner",
+    "vibe-coding",
+    "vibesafe",
+    "code-security"
+  ],
+  "author": "VibeSafe (vibesafe.info)",
+  "license": "MIT",
+  "homepage": "https://vibesafe.info",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SabahatGhauri/vibesafe-mcp"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.0",
+    "zod": "^3.23.8"
+  }
+}
