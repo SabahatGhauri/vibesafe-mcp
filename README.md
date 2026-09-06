@@ -15,7 +15,7 @@ Built for founders and vibe coders shipping AI-generated apps. **Your code is ne
 ## Setup
 
 ### 1. Get a free API key
-Sign in at [vibesafe.info](https://vibesafe.info) → **API keys** → **Generate new key**. It starts with `vibesafe_sk_`. The free plan includes 3 scans per month; Pro is unlimited.
+Sign in at [vibesafe.info](https://vibesafe.info) → **API keys** → **Generate new key**. It starts with `vibesafe_sk_`. The free plan includes 10 scans per month; Pro is unlimited.
 
 ### 2. Add it to your MCP client
 
