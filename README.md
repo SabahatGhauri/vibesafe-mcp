@@ -11,6 +11,7 @@ Built for founders and vibe coders shipping AI-generated apps. **Your code is ne
 | `vibesafe_scan_code` | Scan code for exposed secrets, injection flaws, and risky patterns → security score + per-issue fixes |
 | `vibesafe_scan_url` | Scan a deployed site for missing security headers, HTTPS issues, exposed paths, CORS problems |
 | `vibesafe_launch_check` | Open your deployed app in a real browser like a user, capture errors, return a launch-readiness score |
+| `vibesafe_supabase_rls_fix` | Write the Row-Level Security policies for a Supabase table (read, insert, update, delete), with steps to apply and verify. Runs locally — no keys leave your machine |
 
 ## Setup
 

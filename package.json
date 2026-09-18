@@ -1,6 +1,6 @@
 {
   "name": "vibesafe-mcp",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "VibeSafe security scanner as an MCP server — scan code, live URLs, and run a Launch Check on your app from any MCP client (Claude, Cursor, etc.).",
   "type": "module",
   "bin": {
