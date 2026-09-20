@@ -1,5 +1,4 @@
 node_modules/
-package-lock.json
 *.log
 
 # Never commit secrets or local environment files

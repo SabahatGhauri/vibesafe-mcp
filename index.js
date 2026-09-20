@@ -29,14 +29,19 @@ function textResult(text, isError = false) {
 
 // Render a scan result (code or live URL) as compact, readable text.
 function formatScan(r, header) {
+  if (!r || !Number.isFinite(r.score) || r.score < 0 || r.score > 100 || !Array.isArray(r.issues)
+    || r.issues.some(i => !i || !['critical', 'warning', 'info'].includes(i.severity))) {
+    throw new Error('invalid scan response');
+  }
   const issues = r.issues || [];
   const passed = r.passed || [];
   const lines = [];
   lines.push(`${header}`);
   lines.push(`Security score: ${r.score ?? '—'}/100${r.summary ? ' — ' + r.summary : ''}`);
   lines.push('');
+  if (r.coverage?.truncated) lines.push('⚠️ Scan incomplete: only part of the input was scanned.');
   if (issues.length === 0) {
-    lines.push('✅ No issues found.');
+    lines.push(r.coverage?.truncated ? 'No issues found in the scanned portion.' : '✅ No issues found.');
   } else {
     const order = { critical: 0, warning: 1, info: 2 };
     issues.sort((a, b) => (order[a.severity] ?? 3) - (order[b.severity] ?? 3));
@@ -165,10 +170,11 @@ server.registerTool(
         method: 'POST',
         headers: authHeaders(),
         body: JSON.stringify({ code, language, source: 'mcp' }),
+        signal: AbortSignal.timeout(60000),
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) return textResult(`VibeSafe: ${data.error || 'scan failed (' + res.status + ')'}`, true);
-      return textResult(formatScan(data, 'VibeSafe code scan'));
+      return textResult(formatScan(data, 'VibeSafe code scan'), Boolean(data.coverage?.truncated));
     } catch (e) {
       return textResult(`VibeSafe: could not reach the scanner (${e.message}).`, true);
     }
@@ -193,10 +199,11 @@ server.registerTool(
         method: 'POST',
         headers: authHeaders(),
         body: JSON.stringify({ url }),
+        signal: AbortSignal.timeout(60000),
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) return textResult(`VibeSafe: ${data.error || 'scan failed (' + res.status + ')'}`, true);
-      return textResult(formatScan(data, `VibeSafe live-website scan — ${url}`));
+      return textResult(formatScan(data, `VibeSafe live-website scan — ${url}`), Boolean(data.coverage?.truncated));
     } catch (e) {
       return textResult(`VibeSafe: could not reach the scanner (${e.message}).`, true);
     }
@@ -222,10 +229,12 @@ server.registerTool(
         method: 'POST',
         headers: authHeaders(),
         body: JSON.stringify({ url, goal }),
+        signal: AbortSignal.timeout(120000),
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) return textResult(`VibeSafe: ${data.error || 'Launch Check failed (' + res.status + ')'}`, true);
       const r = data.report || {};
+      if (!Number.isFinite(r.score) || r.score < 0 || r.score > 100) return textResult('VibeSafe: invalid Launch Check response.', true);
       const lines = [`VibeSafe Launch Check — ${url}`, `Score: ${r.score ?? '—'}/100 — ${r.verdict || ''}`, r.summary || '', ''];
       (data.evidence?.pages || []).forEach(p => {
         lines.push(`${p.ok ? '✅' : '❌'} ${p.label}: ${p.title || p.error || ''}${p.loadMs ? ` (${(p.loadMs / 1000).toFixed(1)}s)` : ''}`);

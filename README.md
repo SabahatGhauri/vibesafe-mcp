@@ -1,5 +1,7 @@
 # VibeSafe MCP Server
 
+[![CI](https://github.com/SabahatGhauri/vibesafe-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/SabahatGhauri/vibesafe-mcp/actions/workflows/ci.yml)
+
 Run the [VibeSafe](https://vibesafe.info) security scanner directly inside any MCP client — Claude Desktop, Cursor, Windsurf, and others. Ask your AI to *"scan this file with VibeSafe"* and get a plain-English security report with fixes, without leaving your chat.
 
 Built for founders and vibe coders shipping AI-generated apps. **Your code is never stored.**
@@ -16,7 +18,7 @@ Built for founders and vibe coders shipping AI-generated apps. **Your code is ne
 ## Setup
 
 ### 1. Get a free API key
-Sign in at [vibesafe.info](https://vibesafe.info) → **API keys** → **Generate new key**. It starts with `vibesafe_sk_`. The free plan includes 10 scans per month; Pro is unlimited.
+Sign in at [vibesafe.info](https://vibesafe.info) → **API keys** → **Generate new key**. It starts with `vibesafe_sk_`. Check the website for current plans and scan allowances.
 
 ### 2. Add it to your MCP client
 
@@ -50,7 +52,7 @@ Sign in at [vibesafe.info](https://vibesafe.info) → **API keys** → **Generat
 }
 ```
 
-Restart the client. You should see the three VibeSafe tools available.
+Restart the client. You should see the four VibeSafe tools available.
 
 ### 3. Use it
 > "Scan this file for security issues with VibeSafe"
@@ -66,3 +68,24 @@ Code is scanned in memory by the VibeSafe API and never stored. The scanner only
 - Support: contact@vibesafe.info
 
 MIT licensed.
+
+## Development and failure handling
+
+Use Node.js 20 or newer (Node 22 or 24 recommended). The locked dependency tree
+requires Node 20 or newer:
+
+```sh
+npm ci --ignore-scripts
+npm test
+```
+
+The tests connect an MCP client to the actual stdio server and intercept outgoing
+HTTP requests. They do not contact the scanner or require API credentials. CI
+checks Node 20, 22, and 24 using the committed dependency lockfile.
+
+Code and URL requests time out after 60 seconds; Launch Check requests time out
+after 120 seconds. Failed or malformed responses return tool errors. Truncated
+code/URL results are explicitly marked incomplete and returned with `isError: true`.
+The local RLS helper works without an API key.
+
+Report vulnerabilities through [SECURITY.md](SECURITY.md).

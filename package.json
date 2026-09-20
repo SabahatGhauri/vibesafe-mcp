@@ -11,7 +11,7 @@
     "README.md"
   ],
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
   "keywords": [
     "mcp",
@@ -32,5 +32,8 @@
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.12.0",
     "zod": "^3.23.8"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.mjs"
   }
 }
