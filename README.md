@@ -1,8 +1,18 @@
 # VibeSafe MCP Server
 
-Run the [VibeSafe](https://vibesafe.info) security scanner directly inside any MCP client — Claude Desktop, Cursor, Windsurf, and others. Ask your AI to *"scan this file with VibeSafe"* and get a plain-English security report with fixes, without leaving your chat.
+**An MCP server — not a Claude Code Skill, plugin or extension.** It runs in any client that
+speaks the Model Context Protocol: Claude Desktop, Claude Code, Cursor, Windsurf and others.
+
+Run the [VibeSafe](https://vibesafe.info) security scanner directly inside your AI client. Ask
+*"scan this file with VibeSafe"* and get a plain-English security report with fixes, without
+leaving your chat.
 
 Built for founders and vibe coders shipping AI-generated apps. **Your code is never stored.**
+
+> **On the name.** VibeSafe (vibesafe.info) is an AI code security scanner, and this is its MCP
+> server. It is a separate product from [VibeSafe Builder](https://vibesafebuilder.com), which
+> builds apps rather than scanning them. Both are made by SG Digital Ventures LLC. Neither is
+> affiliated with vibesafe.net, vibesafe.dev, vibesafeai.com or vibe-safe.net.
 
 ## Tools
 
